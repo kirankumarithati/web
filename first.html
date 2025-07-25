@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bus Seat Booking</title>
+        <style>body {font-family: Arial, sans-serif; margin: 20px;
+            }.seats {display: grid; grid-template-columns: repeat(5, 1fr);
+                 gap: 10px; margin-bottom: 20px;}
+                 .seat {width: 50px; height: 50px; background-color: lightgray;
+                     text-align: center;
+                      line-height: 50px;
+                       cursor: pointer;
+                    }
+                    .booked {background-color: red;
+                         color: white;
+                        }
+                        button {padding: 10px; font-size: 16px;}
+
+        </style>
+    </head>
+    <body>
+        <h1>Bus Seat Booking</h1>
+        <div class="seats" id="seatsContainer"></div>
+        <input type="number" id="seatNumber" placeholder="Enter seat number" min="1" max="10">
+        <button onclick="bookSeat()">Book Seat</button>
+        <button onclick="cancelSeat()">Cancel Seat</button>
+        <script>
+            const totalSeats = 10;const seatsContainer = document.getElementById('seatsContainer');
+            const seats = Array(totalSeats).fill(false);
+            for (let i = 0; i < totalSeats; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.innerText = i + 1;
+                seat.onclick = () => selectSeat(i + 1);
+                seatsContainer.appendChild(seat);
+            }
+            function selectSeat(seatNumber) {
+                const seat = seatsContainer.children[seatNumber - 1];if (seats[seatNumber - 1]) {
+                    alert("This seat is already booked.");
+                } else {seat.classList.toggle('selected');
+            }}function bookSeat() {
+                const seatNumber = parseInt(document.getElementById('seatNumber').value);
+                if (seatNumber < 1 || seatNumber > totalSeats) {
+                    alert("Invalid seat number.");
+                    return;}
+                    if (seats[seatNumber - 1]) {alert("This seat is already booked.");
+                } else {seats[seatNumber - 1] = true;seatsContainer.children[seatNumber - 1].classList.add('booked');
+                alert("Seat " + seatNumber + " has been booked.");
+            }}function cancelSeat() {const seatNumber = parseInt(document.getElementById('seatNumber').value);
+            if (seatNumber < 1 || seatNumber > totalSeats) {
+                alert("Invalid seat number.");
+                return;
+            }
+                if (!seats[seatNumber - 1]) {alert("This seat is not booked.");
+            } else {seats[seatNumber - 1] = false;
+                seatsContainer.children[seatNumber - 1].classList.remove('booked');
+                alert("Seat " + seatNumber + " has been canceled.");}}</script>
+    </body>
+</html>
